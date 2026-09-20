@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Scent Atlas — Find Your Scent</title>
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#/discover">
+      <span class="brand-mark">SA</span>
+      <span class="brand-text">Scent Atlas</span>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#/discover" data-nav="discover">Discover</a>
+      <a href="#/search" data-nav="search">Search</a>
+      <a href="#/explore" data-nav="explore">Explore</a>
+      <a href="#/compare" data-nav="compare">Compare <span id="compareCount" class="pill" hidden>0</span></a>
+      <a href="#/saved" data-nav="saved">Saved <span id="savedCount" class="pill" hidden>0</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="view" class="container"></main>
+
+<footer class="footer">
+  <div class="container footer-inner">
+    <span>Scent Atlas MVP — structured fragrance discovery.</span>
+    <span>Data is illustrative seed data. Saved items persist in this browser.</span>
+  </div>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
