@@ -529,6 +529,8 @@ User's saved fragrances.
 
 Browse by notes, families, moods, occasions, seasons, and styles.
 
+> Decision note (2026-09-27): keep the 7-screen structure. Reason: comprehensive enough without overwhelming the user.
+
 ---
 
 ## 14. Example User Stories
@@ -697,3 +699,64 @@ Instead of requiring users to know exactly what perfume they are looking for, th
 The long-term vision is:
 
 > **Don't just search for a perfume. Explore the world of fragrance and find your scent.**
+
+---
+
+## 21. Implementation Plan
+
+Current state (already built): `index.html`, `app.js`, `data.js` (18 records), `styles.css`, `README.md` cover the §6 MVP five experiences as a dependency-free SPA.
+
+### Phase 0 — Baseline audit (done, verify)
+
+- Goal: confirm MVP maps to §7–§8, §13, §15, §17.
+- Concrete outputs: checklist of the 8 MVP success criteria (§17) vs. current screens; list of gaps.
+- Done when: each criterion has a pass/fail note.
+
+### Phase 1 — Data foundation (§9, §8.2)
+
+- Define JSON schema for all §8.2 fields (basic + olfactory + contextual + description/similar/saved-status); allow missing fields without breaking profiles (§15).
+- Add validation script + expand seed set beyond 18 toward ~100 with family/note/context coverage.
+- Add real fragrance imagery (replacing gradient placeholders).
+- Concrete outputs: `data/fragrances.json`, `data/schema.json`, `scripts/validate-data.*`, updated `data.js` or loader.
+- Done when: validation passes; every record renders a full profile.
+
+### Phase 2 — Search & discovery logic (§10, §8.3–§8.4, §15)
+
+- Implement scoring: all-notes+context > most-notes+context > some-notes+related; free-text across names, brands, notes, families, moods, occasions, styles.
+- Combinable filters (family, notes, season, time, occasion, mood, style) with add/remove and live result updates.
+- Concrete outputs: `app.js` search module + `tests/search-cases.md` covering PRD examples (`Vanilla + Sandalwood + Musk`; `Summer + Evening + Date Night + Warm`; `Woody + Sandalwood + Evening + Elegant`).
+- Done when: all three PRD examples rank correctly; empty-state and filter-clear work.
+
+### Phase 3 — Screens & UX (§8.1, §8.5–§8.7, §11–§13, §16)
+
+- Build/finalize 7 screens: Discover, Search, Results, Profile, Compare, Saved, Explore (§13); header/olfactory/context/discovery/actions profile layout (§8.5); 2+ fragrance side-by-side table (§8.7); simple Saved list persisted across sessions (§8.6, §15).
+- Mobile-first responsive, image-led styling, note visualization, minimal search-to-results friction (§11, §16).
+- Concrete outputs: `index.html`, `styles.css`, `app.js` views; `docs/ux-checklist.md` (mobile/tablet/desktop, no-knowledge usability).
+- Done when: Journeys 1–4 (§7) each complete click-through without errors.
+
+### Phase 4 — Quality gate & MVP acceptance (§15, §17)
+
+- Functional tests for search, filtering, profiles, saving persistence, compare shared/differing traits.
+- Performance (no full-page reloads on search/filter) and responsive checks.
+- Concrete outputs: `tests/mvp-acceptance.md` with all 8 §17 criteria signed off.
+- Done when: 8/8 pass; §18 items explicitly deferred.
+
+### Phase 5 — Post-MVP backlog (§19, gated)
+
+- Only after Phase 4: quiz, AI discovery, wardrobe, reviews, house profiles, community.
+- Concrete output: ordered `docs/roadmap.md`, one proposal per feature.
+
+Suggested order: 0 → 1 → 2 → 3 → 4, then 5.
+
+---
+
+## 22. Technical Stack & Local Runtime
+
+The app and database run locally for now. There is no cloud backend, no hosted database, and no user accounts in the MVP.
+
+- **Framework:** none — vanilla HTML + CSS + JavaScript single-page app (`index.html`, `styles.css`, `app.js`). No build step, no dependencies.
+- **Database:** local structured seed data (`data.js` as `FRAGRANCES`, moving to `data/fragrances.json` with `data/schema.json` in Phase 1). No server database. Per-browser state (Saved list, compare tray) persists in `localStorage`.
+- **Authentication:** none. MVP is single-user local use; no login, no accounts, no sessions (consistent with §18 out of scope: no social/reviews requiring identity).
+- **File storage:** local project folder for code, data, and static assets (fragrance imagery); runtime user state in browser `localStorage`. No cloud/object storage.
+
+Run locally via any static server (e.g. `python -m http.server 8000` → `http://localhost:8000`).
