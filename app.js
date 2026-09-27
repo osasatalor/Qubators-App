@@ -135,12 +135,12 @@
     const recent = [...FRAGRANCES].sort((a, b) => a.added_rank - b.added_rank).slice(0, 4);
     const autumn = FRAGRANCES.filter(f => (f.season || []).includes("Autumn")).slice(0, 4);
     const prompts = [
-      { label: "Explore Vanilla", link: "#/search?notes=Vanilla" },
-      { label: "Find a Summer Fragrance", link: "#/search?season=Summer" },
-      { label: "Discover Woody Scents", link: "#/search?family=Woody" },
-      { label: "Date Night", link: "#/search?occasion=Date Night" },
-      { label: "Fresh & Clean", link: "#/search?mood=Fresh & Clean" },
-      { label: "Warm & Cozy", link: "#/search?mood=Warm & Cozy" },
+      { label: "Explore Vanilla", link: "#/search?notes=" + encodeURIComponent("Vanilla") },
+      { label: "Find a Summer Fragrance", link: "#/search?season=" + encodeURIComponent("Summer") },
+      { label: "Discover Woody Scents", link: "#/search?family=" + encodeURIComponent("Woody") },
+      { label: "Date Night", link: "#/search?occasion=" + encodeURIComponent("Date Night") },
+      { label: "Fresh & Clean", link: "#/search?mood=" + encodeURIComponent("Fresh & Clean") },
+      { label: "Warm & Cozy", link: "#/search?mood=" + encodeURIComponent("Warm & Cozy") },
     ];
     view.innerHTML = `
       <section class="hero">
@@ -192,7 +192,7 @@
           <option value="newest" ${s.sort === "newest" ? "selected" : ""}>Newest</option>
           <option value="name" ${s.sort === "name" ? "selected" : ""}>Name A–Z</option>
         </select></label>
-        <span class="meta">${res.length} result${res.length === 1 ? "" : "s"}</span>
+        <span class="meta" id="resCount">${res.length} result${res.length === 1 ? "" : "s"}</span>
         <button class="btn small" data-act="clear-all">Clear all filters</button>
       </div>
       <div class="section"><div class="grid">${res.length ? res.map(card).join("") : `<div class="empty">No matches. Try fewer notes or clearing a filter.</div>`}</div></div>`;
@@ -208,7 +208,7 @@
     const s = state.search;
     const res = searchFragrances(s);
     const grid = view.querySelector(".grid");
-    const count = view.querySelector(".toolbar .meta");
+    const count = document.getElementById("resCount");
     if (grid) grid.innerHTML = res.length ? res.map(card).join("") : `<div class="empty">No matches. Try fewer notes or clearing a filter.</div>`;
     if (count) count.textContent = `${res.length} result${res.length === 1 ? "" : "s"}`;
     const q = document.getElementById("q");
@@ -315,12 +315,14 @@
   // ---- Router ----
   function applyQuery(qs) {
     const q = new URLSearchParams(qs);
-    const s = { q: "", notes: [], family: [], season: [], time_of_day: [], occasion: [], mood: [], style: [], gender: [], sort: state.search.sort };
+    if (![...q.keys()].length) return;
     for (const [k, v] of q.entries()) {
-      if (k === "notes") s.notes.push(v);
-      else if (k in s && Array.isArray(s[k])) s[k].push(v);
+      if (k === "notes") {
+        if (!state.search.notes.includes(v)) state.search.notes.push(v);
+      } else if (k in state.search && Array.isArray(state.search[k])) {
+        if (!state.search[k].includes(v)) state.search[k].push(v);
+      }
     }
-    if ([...q.keys()].length) state.search = { ...state.search, ...s };
   }
 
   function rerender() { route(false); }
