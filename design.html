@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Scent Atlas — Design Preview</title>
+<link rel="stylesheet" href="styles.css" />
+<style>
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+  .swatch { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; background: #fff; }
+  .swatch-color { height: 64px; }
+  .swatch-body { padding: 8px 10px; font-size: 12px; }
+  .swatch-body code { display: block; color: var(--muted); }
+  .demo-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .dark-box { background: #211d19; border-radius: 16px; padding: 20px; }
+</style>
+</head>
+<body>
+<main class="container" style="padding: 24px 16px 48px;">
+  <h1>Design Preview</h1>
+  <p class="meta">Tokens and components sampled from <code>styles.css</code>.</p>
+
+  <section class="section">
+    <h2>Colors</h2>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch-color" style="background:#faf7f2"></div><div class="swatch-body">Background<code>--bg #faf7f2</code></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#ffffff;border-bottom:1px solid var(--line)"></div><div class="swatch-body">Card<code>--card #ffffff</code></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#211d19"></div><div class="swatch-body">Ink<code>--ink #211d19</code></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#6f655c"></div><div class="swatch-body">Muted<code>--muted #6f655c</code></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#e9e0d4"></div><div class="swatch-body">Line<code>--line #e9e0d4</code></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#8a5a2b"></div><div class="swatch-body">Accent<code>--accent #8a5a2b</code></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#fff8ef;border-bottom:1px solid var(--line)"></div><div class="swatch-body">Accent ink<code>--accent-ink #fff8ef</code></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:#f1e9db"></div><div class="swatch-body">Chip<code>--chip #f1e9db</code></div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Typography</h2>
+    <div class="panel">
+      <h1>Heading 1 — Georgia serif</h1>
+      <h2>Heading 2 — Georgia serif</h2>
+      <h3>Heading 3 — Georgia serif</h3>
+      <p>Body — system sans. Scent Atlas turns structured fragrance data into an intuitive discovery flow.</p>
+      <p class="meta">Meta — 13px muted text for brands, counts, and hints.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Buttons</h2>
+    <div class="demo-row">
+      <button class="btn primary">Primary</button>
+      <button class="btn">Default</button>
+      <button class="btn small">Small</button>
+      <button class="btn small primary">Saved ✓</button>
+      <button class="btn" disabled>Disabled</button>
+      <span class="tag">Tag</span>
+      <span class="tag match">Match</span>
+    </div>
+    <div class="dark-box" style="margin-top:10px;">
+      <div class="demo-row">
+        <button class="btn ghost">Ghost on dark</button>
+        <button class="chip">Chip</button>
+        <button class="chip on">Chip on</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2>Inputs</h2>
+    <div class="panel">
+      <input class="search-input" placeholder="Search name, brand, note, mood… e.g. vanilla evening" value="vanilla evening" />
+      <div class="toolbar">
+        <label class="meta">Sort
+          <select>
+            <option>Best match</option>
+            <option>Newest</option>
+            <option>Name A–Z</option>
+          </select>
+        </label>
+      </div>
+    </div>
+  </section>
+</main>
+</body>
+</html>
