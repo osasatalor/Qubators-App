@@ -464,6 +464,8 @@ The product should feel like a **fragrance discovery experience**, rather than a
 - Minimal friction between search and results
 - Mobile-first responsive design
 
+> Decision note (2026-09-27): color palette changed to bubble gum pink + rich purple for a very feminine feel (blush background, plum ink, purple accent, pink chips). Applied in `styles.css` tokens and reflected in `design.html`.
+
 ---
 
 ## 12. Navigation
